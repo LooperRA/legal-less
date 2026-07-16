@@ -1,0 +1,2 @@
+hearing_date,court,case_number,case_name,hearing_type,event_status,firm_name,represented_side,source_url,retrieved_at,notes
+2025-01-15,Court of Final Appeal,FACV 1/2025,Example A v Example B,Appeal,Listed,Example & Co,Appellant,https://example.invalid/cause/1,2026-07-16T14:00:00+08:00,Structural example only

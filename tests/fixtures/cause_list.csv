@@ -1,0 +1,7 @@
+hearing_date,court,case_number,case_name,hearing_type,event_status,firm_name,represented_side,source_url,retrieved_at,notes
+2025-01-10,High Court,FACV 1/2025,Alpha v Beta,Appeal,listed,Harbor & Co.,Appellant,https://example.test/cause/1,2025-01-09T10:00:00Z,
+2025-01-11,High Court,FACV 1/2025,Alpha v Beta,Appeal,suspended,Harbor & Co.,Appellant,https://example.test/cause/2,2025-01-10T10:00:00Z,Status only; reason unknown
+2025-02-10,High Court,FACV 2/2025,Gamma v Harbor,Appeal,adjourned,Harbor & Co.,Party,https://example.test/cause/3,2025-02-09T10:00:00Z,
+2025-03-10,High Court,FACV 3/2025,Delta v Echo,Appeal,heard,Harbor & Co.,Respondent,https://example.test/cause/4,2025-03-09T10:00:00Z,
+2025-04-10,High Court,FACV 4/2025,Redacted v Redacted,Appeal,suspended,A Firm,Appellant,https://example.test/cause/5,2025-04-09T10:00:00Z,Court-anonymized placeholder
+2025-05-10,High Court,FACV 5/2025,Redacted v Redacted,Appeal,listed,A Firm,Respondent,https://example.test/cause/6,2025-05-09T10:00:00Z,Court-anonymized placeholder

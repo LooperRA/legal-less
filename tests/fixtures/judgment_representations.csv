@@ -1,0 +1,4 @@
+judgment_date,court,case_number,neutral_citation,case_name,outcome,firm_name,represented_side,firm_role,relationship_to_firm,relationship_evidence,source_url,retrieved_at,source_reference
+2025-06-01,HKCFA,FACV1/2025,[2025] HKCFA 90,Alpha v Beta,Appeal dismissed,Harbor & Co.,Appellant,representative,not_applicable,,https://example.test/judgment/1,2025-06-01T10:00:00Z,line 101
+2025-06-02,HKCFA,FACV2/2025,[2025] HKCFA 91,Gamma v Harbor,Claim allowed in part,Harbor & Co.,Defendant,party,former_client,Paragraph 4 expressly identifies Gamma as the firm's former client,https://example.test/judgment/2,2025-06-02T10:00:00Z,paragraph 4
+2025-06-03,HKCFA,FACV4/2025,[2025] HKCFA 92,Redacted v Redacted,Appeal dismissed,A Firm,Appellant,representative,not_applicable,,https://example.test/judgment/4,2025-06-03T10:00:00Z,line 88

@@ -1,0 +1,2 @@
+judgment_date,court,case_number,neutral_citation,case_name,outcome,firm_name,represented_side,firm_role,relationship_to_firm,relationship_evidence,source_url,retrieved_at,source_reference
+2025-02-03,HKCFA,FACV1/2025,[2025] HKCFA 1,Example A v Example B,Appeal dismissed,Example & Co,Appellant,representative,not_applicable,,https://example.invalid/judgment/1,2026-07-16T14:15:00+08:00,counsel appearance line
