@@ -4,7 +4,7 @@
 
 [繁體中文說明](README.zh-HK.md)
 
-> **Proprietary equation:** **Court position + legal reasoning = ratio decidendi candidate.**
+> **Proprietary equation:** **Legal principle + court position = ratio decidendi.** (v0.1 expressed this as court position + legal reasoning; v0.2 uses the owner's refined formulation.)
 
 The repository contains two connected but analytically separate projects. **Project One** is restricted to judgments of the Hong Kong Court of Final Appeal (“HKCFA”). It identifies traceable ratio candidates and answers five mandatory questions. **Project Two** compares operator-reviewed cause-list records with final-judgment representation records by exact case number and firm name. It reports evidence-linked descriptive patterns, not misconduct, competence, causation, or case quality.
 
@@ -16,6 +16,22 @@ The repository contains two connected but analytically separate projects. **Proj
 | **Representation Evidence Map** | Validates reviewed CSV records; normalizes case numbers and firm names; preserves anonymization; links exact case/firm evidence; suppresses unreliable rates | No unattended cause-list crawler, identity resolution, practitioner ranking, or automated blame/success claim |
 
 The first public release is a **local evidence toolkit**. This keeps acquisition, legal basis, retention, and publication decisions with the operator. HK Court Diary’s privacy and disclaimer pages limit the intended use of cause-list personal data and warn that its parsed information may contain errors.[1] [2] The Judiciary describes its online cause-list results as reference material and publishes copyright and reliance conditions.[3] [4] Accordingly, this repository does not ship a crawler or bulk archive.
+
+## v0.2: zone-based ratio pipeline
+
+> **Legal principle + court position = ratio decidendi**
+
+v0.2 reads headings and sub-headings, separates each judge's reasons into a **zone** (lead, concurring, dissent, Appeal Committee), inventories every legal principle and court position with verified verbatim quotes and pinpoints, matches them into same-zone combos, **trial-tests** each combo against the case's own facts, and keeps only the survivors as true ratio. Leave-stage (Appeal Committee) reasoning can yield ratio.
+
+```bash
+pip install -e '.[llm]'
+legal-less ratio structure judgment.md        # headings + judge zones, no model
+legal-less ratio analyze judgment.md --json-output case.json
+legal-less ratio batch corpus/ results/       # resumable
+legal-less ratio export results/ --xlsx register.xlsx --app-json register.json
+```
+
+Details: [`docs/RATIO_PIPELINE_V2.md`](docs/RATIO_PIPELINE_V2.md) | data sources and compliance: [`docs/DATA_SOURCES_AND_COMPLIANCE.md`](docs/DATA_SOURCES_AND_COMPLIANCE.md) | pilot: [`research/phase7/PILOT_V0_2.md`](research/phase7/PILOT_V0_2.md) | App Store: [`docs/APP_STORE_RELEASE.md`](docs/APP_STORE_RELEASE.md).
 
 ## Five-question framework
 

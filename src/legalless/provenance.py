@@ -12,7 +12,7 @@ from hashlib import sha256
 from pathlib import Path
 from typing import Any
 
-PARSER_VERSION = "0.1.0"
+PARSER_VERSION = "0.2.0"
 
 
 @dataclass(slots=True)

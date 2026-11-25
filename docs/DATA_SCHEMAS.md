@@ -98,3 +98,25 @@ The suspended-event rate is suppressed unless the firm has at least the operator
 ## Provenance
 
 Each comparison report records the imported file descriptions, SHA-256 digests, parser version, generated timestamp, and mandatory interpretation warnings. Retain source URLs and retrieval timestamps in the CSV so every observation can be checked against its underlying record.
+
+## Ratio pipeline v0.2 - case result (JSON)
+
+One file per judgment (`hkcfa_<year>_<num>.json`).
+
+| Field | Type | Notes |
+|---|---|---|
+| `neutral_citation`, `case_title`, `action_numbers[]` | string / list | From the front matter |
+| `court_level` | string | `Court of Final Appeal - Full Court (final appeal)` or `... - Appeal Committee (leave stage)` |
+| `proceeding_type` | string | `substantive_appeal` or `leave_application` |
+| `dates` | object | Every dated event; `primary_date` is the judgment, determination or reasons date |
+| `coram[]`, `bench_outcome`, `dissenting_judges[]` | | `bench_outcome` is `unanimous` or `majority` |
+| `zones[]` | object | `zone_id`, `judges[]`, `role`, `span`, `agrees_with[]`, `supported_by[]` |
+| `headings[]` | object | Heading text, level and paragraph span |
+| `items[]` | object | `item_id` (LP#/CP#), `kind`, `zone_id`, `paragraph`, `heading_path[]`, `quote`, `statement`, `issue` |
+| `combos[]` | object | `combo_id`, `issue_id`, `zone_id`, `principle_ids[]`, `position_ids[]`, `paragraphs[]`, `ratio_statement`, `ratio_zh`, `classification`, `reasoning`, `material_facts_applied`, `predicted_outcome`, `actual_outcome`, `consistent_with_outcome`, `inversion_changes_outcome`, `logically_intolerable`, `intolerability_reason`, `authority_gate`, `verdict`, `confidence`, `test_explanation` |
+| `summary` | object | `core_issue_en/zh`, `final_result_en/zh`, `summary_en/zh`, `obiter[]`, `dissent[]`, `ratio_zh`, `ratio_makers[]` |
+| `warnings[]`, `provenance` | | Dropped quotes, model, source hash |
+
+`verdict` is one of `TRUE_RATIO`, `OBITER`, `NOT_NECESSARY`, `FAILED_INTOLERABLE`, `MINORITY_VIEW`, `CONCURRING_VIEW`.
+
+The Excel register sheets are: Read Me, Case Summary, True Ratio, Combos & Trial Test, Legal Principles, Court Positions, Zones, Obiter & Dissent, Data Quality. The app dataset (`register.json`) is a slim export of the same data.

@@ -4,25 +4,29 @@ build-backend = "hatchling.build"
 
 [project]
 name = "legal-less"
-version = "0.1.0"
-description = "Auditable HKCFA ratio decidendi locator and representation evidence mapper"
+version = "0.2.0"
+description = "Auditable, zone-aware HKCFA ratio decidendi locator (legal principle + court position = ratio) with trial-test verification"
 readme = "README.md"
 requires-python = ">=3.11"
 license = { file = "LICENSE" }
 authors = [{ name = "LooperRA" }]
 dependencies = [
   "beautifulsoup4>=4.12,<5",
+  "openpyxl>=3.1,<4",
 ]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Intended Audience :: Legal Industry",
-  "License :: OSI Approved :: MIT License",
+  "License :: OSI Approved :: The Unlicense (Unlicense)",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.11",
   "Topic :: Text Processing :: Indexing",
 ]
 
 [project.optional-dependencies]
+llm = [
+  "openai>=1.40",
+]
 dev = [
   "pytest>=8.2,<9",
   "ruff>=0.6,<1",

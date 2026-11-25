@@ -46,3 +46,9 @@ The software does not bypass access controls, archive pages contrary to publicat
 ## Future Deployment Boundary
 
 A hosted edition should be considered only after confirming the legal basis for each source, defining a retention schedule, implementing role-based access and correction procedures, and documenting a review process for any firm-level publication. A future persistent data layer and review queue are not part of this release. If later authorised, scheduled deterministic ingestion should run as application background jobs; legal extraction may remain deterministic or use a separately disclosed model-assisted step with mandatory evidence review.
+
+## v0.2 addendum: model-assisted ratio pipeline
+
+`legalless.structure` (deterministic) -> `legalless.ratio` (model-assisted, with programmatic quote verification and a deterministic authority gate) -> `legalless.batch` (resumable) -> `legalless.excel` (register and app dataset). The model client (`legalless.llm`) uses strict JSON schemas, a global concurrency cap and retries. The model never decides authority; zone roles and majority counts come from the parser. Raw judgments stay outside Git. See `docs/RATIO_PIPELINE_V2.md` and `docs/DATA_SOURCES_AND_COMPLIANCE.md`.
+
+A mobile reference client (Expo / React Native, offline, bundled `register.json`) is described in `docs/APP_STORE_RELEASE.md`.

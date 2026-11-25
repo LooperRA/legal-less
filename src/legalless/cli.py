@@ -72,6 +72,47 @@ def _run_representation_compare(args: argparse.Namespace) -> int:
     return 0
 
 
+def _run_ratio_structure(args: argparse.Namespace) -> int:
+    from .structure import parse_judgment
+
+    doc = parse_judgment(Path(args.input).read_text(encoding="utf-8"))
+    _write_output(args.json_output, doc.to_json() + "\n")
+    return 0 if doc.paragraphs else 3
+
+
+def _run_ratio_analyze(args: argparse.Namespace) -> int:
+    from .llm import OpenAIJSONModel
+    from .ratio import analyse_judgment
+
+    llm = OpenAIJSONModel(model=args.model, reasoning_effort=args.effort)
+    result = analyse_judgment(
+        Path(args.input).read_text(encoding="utf-8"), llm, source_url=args.source_url,
+        source_description=f"operator-supplied file {Path(args.input).name}",
+    )
+    _write_output(args.json_output, result.to_json() + "\n")
+    return 0 if result.combos else 4
+
+
+def _run_ratio_batch(args: argparse.Namespace) -> int:
+    from .batch import run_batch
+    from .llm import OpenAIJSONModel
+
+    llm = OpenAIJSONModel(model=args.model, reasoning_effort=args.effort)
+    stats = run_batch(args.input_dir, args.out_dir, llm, workers=args.workers, limit=args.limit, force=args.force)
+    sys.stderr.write(f"{stats} {llm.log.to_dict()}\n")
+    return 0 if not stats["failed"] else 5
+
+
+def _run_ratio_export(args: argparse.Namespace) -> int:
+    from .excel import export_app_dataset, export_workbook, load_results
+
+    cases = load_results(args.results_dir)
+    export_workbook(cases, args.xlsx)
+    if args.app_json:
+        export_app_dataset(cases, args.app_json)
+    return 0 if cases else 6
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="legal-less",
@@ -142,6 +183,38 @@ def build_parser() -> argparse.ArgumentParser:
     compare.add_argument("--markdown-output", help="Path for the human-review report")
     compare.set_defaults(handler=_run_representation_compare)
 
+    ratio = commands.add_parser(
+        "ratio",
+        help="v0.2 zone-aware LP + CP = ratio pipeline with trial-test verification",
+    )
+    ratio_commands = ratio.add_subparsers(dest="ratio_command", required=True)
+    structure = ratio_commands.add_parser("structure", help="Parse headings, paragraphs and judge zones (no LLM)")
+    structure.add_argument("input")
+    structure.add_argument("--json-output")
+    structure.set_defaults(handler=_run_ratio_structure)
+    for name, handler, helptext in (
+        ("analyze", _run_ratio_analyze, "Run the full pipeline on one operator-supplied judgment"),
+        ("batch", _run_ratio_batch, "Run the full pipeline on every judgment file in a directory"),
+    ):
+        cmd = ratio_commands.add_parser(name, help=helptext)
+        if name == "analyze":
+            cmd.add_argument("input")
+            cmd.add_argument("--json-output")
+            cmd.add_argument("--source-url")
+        else:
+            cmd.add_argument("input_dir")
+            cmd.add_argument("out_dir")
+            cmd.add_argument("--workers", type=int, default=2)
+            cmd.add_argument("--limit", type=int)
+            cmd.add_argument("--force", action="store_true")
+        cmd.add_argument("--model", help="LLM model id (default: $LEGALLESS_MODEL or gpt-6.1-sol)")
+        cmd.add_argument("--effort", help="reasoning effort (default: medium)")
+        cmd.set_defaults(handler=handler)
+    export = ratio_commands.add_parser("export", help="Build the Excel register (and app dataset) from results")
+    export.add_argument("results_dir")
+    export.add_argument("--xlsx", required=True)
+    export.add_argument("--app-json")
+    export.set_defaults(handler=_run_ratio_export)
     return parser
 
 

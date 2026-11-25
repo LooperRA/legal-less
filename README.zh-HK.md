@@ -4,9 +4,25 @@
 
 [English README](README.md)
 
-> **專屬方程式：法院立場（Court position）＋法律推理（legal reasoning）＝ 裁判理由候選（ratio decidendi candidate）。**
+> **專屬方程式：法律原則（legal principle）＋法院立場（court position）＝ 裁判理由（ratio decidendi）。**（v0.2 改良 v0.1「法院立場＋法律推理」的表述。）
 
 本儲存庫包含兩個互相關連、但分析上彼此獨立的項目。**項目一**只處理香港終審法院判案書，按段落定位可核證的裁判理由候選，並回答五條必要問題。**項目二**把經操作人員審核的每日聆訊表紀錄，與最終判案書內的律師行代表紀錄作精確比對。項目二屬於**證據地圖**，並非失當行為偵測器、疏忽分類器、勝負統計或律師排名服務。
+
+## v0.2：按法官分區的裁判理由流程
+
+> **法律原則 ＋ 法院立場 ＝ 裁判理由（ratio decidendi）**
+
+v0.2 會讀取標題及小標題，把每位法官（主審、同意、異議、上訴許可委員會）的理由分成獨立**分區**，逐一整理所有法律原則及法院立場（附逐字引文及段落出處），只在同一分區內配對，再把每個組合套用於本案事實作**試驗測試**，通過者才列為真正裁判理由。上訴許可階段的理由同樣可以產生裁判理由。
+
+```bash
+pip install -e '.[llm]'
+legal-less ratio structure judgment.md
+legal-less ratio analyze judgment.md --json-output case.json
+legal-less ratio batch corpus/ results/
+legal-less ratio export results/ --xlsx register.xlsx --app-json register.json
+```
+
+詳情見 [`docs/RATIO_PIPELINE_V2.md`](docs/RATIO_PIPELINE_V2.md)。模型輔助的分類須經律師覆核；中文為工作譯本，並非官方翻譯。
 
 ## 目前實作
 

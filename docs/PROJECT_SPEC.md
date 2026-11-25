@@ -4,7 +4,7 @@
 
 The repository contains two connected but analytically separate projects. **Project One** locates and explains the ratio decidendi in judgments of the Hong Kong Court of Final Appeal (“HKCFA”). **Project Two** compares law-firm representation events appearing in permitted cause-list data with final-judgment representation records, without converting correlation into allegations of fault.
 
-> **Proprietary equation:** **Court position + legal reasoning = ratio decidendi.**
+> **Proprietary equation:** **Legal principle + court position = ratio decidendi.** (v0.2 refinement of the v0.1 wording "court position + legal reasoning".)
 
 The equation is implemented as an auditable ranking rule rather than an opaque summary. A proposition can qualify as a ratio candidate only when the judgment text provides evidence of both: (a) the court’s operative position on an issue necessary to disposition; and (b) the reasoning that connects authority, rule, facts, and result.
 
@@ -35,6 +35,16 @@ The locator operates at paragraph level. It identifies propositions and scores t
 | **Traceability** | Stable paragraph numbers, source URL, retrieval date, document hash | Untraceable paraphrase or missing source metadata |
 
 The output must distinguish **candidate ratio**, **supporting reasoning**, **application**, **disposition**, **costs**, and **confidence limitations**. The system must never present a generated paraphrase without the evidence passages from which it was derived.
+
+### v0.2 amendments
+
+1. **Leave-stage reasoning can yield ratio.** Appeal Committee determinations contain legal principles and court positions on the leave question. The scope of such a ratio is the leave question. Any earlier rule treating leave reasoning as non-ratio is withdrawn.
+2. **Zone integrity.** Each judge (or group of judges) has a separate zone. A legal principle and a court position may be combined only if they come from the same zone. Dissenting zones are never merged into the majority.
+3. **Authority gate.** A combo is a `TRUE_RATIO` only if its zone is a committee ruling or is supported by a majority of the coram. Dissent gives `MINORITY_VIEW`. A separate concurrence without majority support gives `CONCURRING_VIEW`.
+4. **Trial test.** A combo must be consistent with the case's own outcome, must be necessary to it (inversion), and must not be logically intolerable on the case's own facts.
+5. **Traceability.** Every item carries a paragraph number and a machine-verified verbatim quote. Unverifiable quotes are dropped.
+
+See `docs/RATIO_PIPELINE_V2.md`.
 
 ## Project Two: Representation Evidence Map
 

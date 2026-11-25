@@ -33,3 +33,9 @@ downloads/
 .idea/
 .DS_Store
 Thumbs.db
+
+# v0.2 data (never commit raw judgments or generated results)
+corpus/
+results/
+output/
+*.xlsx
